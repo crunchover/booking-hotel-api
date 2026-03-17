@@ -1,0 +1,1 @@
+package com.tuempresa.booking.hotel.api.configuration;

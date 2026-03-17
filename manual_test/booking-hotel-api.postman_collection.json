@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "292985fa-fd40-4cfa-8537-106e631be6e8",
+		"name": "booking-hotel-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2084352"
+	},
+	"item": [
+		{
+			"name": "Get Count",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/booking/count?searchId=XXXXX",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"booking",
+						"count"
+					],
+					"query": [
+						{
+							"key": "searchId",
+							"value": "XXXXX"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Count",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/booking/count?searchId=gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								"count"
+							],
+							"query": [
+								{
+									"key": "searchId",
+									"value": "gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 01 May 2025 14:16:44 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"searchId\": \"1\",\n    \"search\": {\n        \"hotelId\": \"1234aBc\",\n        \"checkIn\": \"29/12/2023\",\n        \"checkOut\": \"31/12/2023\",\n        \"ages\": [\n            1,\n            30,\n            29,\n            3\n        ]\n    },\n    \"count\": 1\n}"
+				},
+				{
+					"name": "Get Count",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/booking/count?searchId=gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								"count"
+							],
+							"query": [
+								{
+									"key": "searchId",
+									"value": "gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 01 May 2025 14:17:13 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"searchId\": \"1\",\n    \"search\": {\n        \"hotelId\": \"1234aBc\",\n        \"checkIn\": \"29/12/2023\",\n        \"checkOut\": \"31/12/2023\",\n        \"ages\": [\n            1,\n            30,\n            29,\n            3\n        ]\n    },\n    \"count\": 2\n}"
+				}
+			]
+		},
+		{
+			"name": "post search",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"hotelId\": \"1234aBc\",\n  \"checkIn\": \"29/12/2023\",\n  \"checkOut\": \"31/12/2023\",\n  \"ages\": [1,30, 29, 3]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/booking/search",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"booking",
+						"search"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "post search",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"hotelId\": \"1234aBc\",\n  \"checkIn\": \"29/12/2023\",\n  \"checkOut\": \"31/12/2023\",\n  \"ages\": [1,30, 29, 3]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								"search"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Location",
+							"value": "/booking/search/gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 01 May 2025 13:30:15 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"searchId\": \"gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4\"\n}"
+				},
+				{
+					"name": "post search",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"hotelId\": \"1234aBc\",\n  \"checkIn\": \"29/12/2023\",\n  \"checkOut\": \"31/12/2023\",\n  \"ages\": [1,30, 29, 3]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								"search"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Location",
+							"value": "/booking/search/gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 01 May 2025 14:14:57 GMT"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=60"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"searchId\": \"gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4\"\n}"
+				}
+			]
+		}
+	]
+}
