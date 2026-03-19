@@ -1,1 +1,0 @@
-package com.tuempresa.booking.hotel.api.gateway;

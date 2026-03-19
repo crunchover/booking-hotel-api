@@ -3,29 +3,38 @@ version: '3.8'
 services:
   api:
     build: .
-    container_name: booking-core-api
+    container_name: hotel-search-api
     environment:
-      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_USER=user
+      - DB_PASSWORD=password
     ports:
       - "8080:8080"
     depends_on:
-      - kafka
-      - db-booking-core-api
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
     networks:
       - net
 
-  db-booking-core-api:
-    container_name: booking-core-db
+  db:
+    container_name: hotel-search-db
     image: postgres:15.2
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - db:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=booking_core_db
+      - POSTGRES_DB=booking_db
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d booking_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - net
 
@@ -48,15 +57,23 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     depends_on:
       - zookeeper
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "kafka:9092"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
     networks:
       - net
 
 volumes:
-  db:
+  db-data:
 
 networks:
   net:

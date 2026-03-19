@@ -1,73 +1,137 @@
-# 🏨 Hotel Search API
+# Hotel Availability Search API
 
-Servicio REST para registrar y contar búsquedas de hoteles. Utiliza:
-
-- Spring Boot 3
-- PostgreSQL 15
-- Apache Kafka (publicador + listener)
-- Docker Compose
-- Arquitectura simple propone organizar el código fuente en los siguientes paquetes:
-
-* configuration: Clases de configuracion de spring y demas frameworks
-* usecase: Interfaces e implementaciones de casos de uso que nuestra solucion ha de resolver
-* model: Clases tipo Request / Response / DTOs / Mapeos de hibernate
-* validation: Clases que ejecutan validaciones de negocio / validaciones del modelo
-    - Se nombran con prefijo Validate o sufijo Validator
-* util: clases tipo helpers con funcionalidades tecnicas "cross" que no se ajustan a ningun otro paquete
-* gateway: componentes que salen "afuera" del sistema para obtener datos
-    - Tienen correspondencia 1 a 1 con cada entidad de negocio
-* endpoint: contrapartida de gateway / punto de entrada de la aplicacion
-    - Cada punto de entrada debe estar contenido en clases separadas
-    - Entradas REST deben nombrarse con sufijo *Endpoint
-* exception: contiene excepciones propias de la solucion
----
-
-## 🛠️ Requisitos
-
-- Docker y Docker Compose instalados
-- Java 21 (para desarrollo)
-- Gradle o IDE compatible con Spring Boot
+REST API built with Spring Boot for registering and counting hotel availability searches. Uses an event-driven architecture with Apache Kafka and persists data in PostgreSQL.
 
 ---
 
-## 🚀 Cómo levantar el proyecto localmente
+## Stack
 
-### 1. Clona el repositorio
+- **Java 21** (virtual threads)
+- **Spring Boot 3.4.3**
+- **Apache Kafka** (producer + consumer)
+- **PostgreSQL 15**
+- **Flyway** (schema migrations)
+- **SpringDoc OpenAPI / Swagger UI**
+- **JaCoCo** (test coverage)
+- **Docker Compose** (full containerized setup)
+
+---
+
+## Architecture
+
+The project follows **Hexagonal Architecture** (Ports and Adapters), organized into:
+
+```
+com.hotel.booking
+├── domain/           # Business models and port interfaces (no framework deps)
+├── application/      # Use case implementations
+├── infrastructure/   # REST controllers, Kafka, JPA adapters, config
+└── shared/           # Exceptions, validators, utils
+```
+
+Dependencies flow inward: infrastructure → application → domain. The domain has no knowledge of Spring or Kafka.
+
+---
+
+## Running the application
+
+The only requirement is **Docker** and **Docker Compose**.
 
 ```bash
+git clone <repo-url>
+cd booking-hotel-api
 docker compose up --build
 ```
 
-##  Endpoints
+This will:
+1. Compile the application inside Docker (no local Java/Gradle needed)
+2. Start PostgreSQL, Zookeeper, Kafka, and the API
 
-### 1. Realiza una búsqueda de hotel
-curl --location 'http://localhost:8080/booking/search' \
---header 'Content-Type: application/json' \
---data '{
-  "hotelId": "1234aBc",
-  "checkIn": "29/12/2023",
-  "checkOut": "31/12/2023",
-  "ages": [1, 30, 29, 3]
-}'
+Wait for the API to be ready (watch for `Started BookingApiApplication`), then access:
 
-### Response:
+- **API**: `http://localhost:8080`
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html`
 
-json
+To stop everything:
+```bash
+docker compose down -v
+```
+
+---
+
+## Endpoints
+
+### POST /search — Register a hotel searh
+
+```bash
+curl -X POST http://localhost:8080/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "hotelId": "1234aBc",
+    "checkIn": "29/12/2023",
+    "checkOut": "31/12/2023",
+    "ages": [30, 29, 1, 3]
+  }'
+```
+
+**Response** `201 Created`:
+```json
 {
   "searchId": "gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4"
 }
+```
 
-### 2.Consulta cuántas veces se buscó un hotel (por searchId)
-curl --location 'http://localhost:8080/booking/count?searchId=gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4'
+> Note: `ages` order matters. `[30, 29]` and `[29, 30]` produce different `searchId` values.
 
-### Response:
+### GET /count — Get count of identical searches
+
+```bash
+curl "http://localhost:8080/count?searchId=gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4"
+```
+
+**Response** `200 OK`:
+```json
 {
-  "searchId": "1",
+  "searchId": "gWRsIt-pSjzAyBkLskleT-GRq_knzZdoNt1p1q8HSi4",
   "search": {
     "hotelId": "1234aBc",
     "checkIn": "29/12/2023",
     "checkOut": "31/12/2023",
-    "ages": [1, 30, 29, 3]
+    "ages": [30, 29, 1, 3]
   },
-  "count": 2
+  "count": 3
 }
+```
+
+---
+
+## Request validation
+
+| Field | Rule |
+|---|---|
+| `hotelId` | Required, non-blank |
+| `checkIn` | Required, format `dd/MM/yyyy`, must be before `checkOut` |
+| `checkOut` | Required, format `dd/MM/yyyy` |
+| `ages` | Required, at least 1 element, each value between 0 and 120 |
+
+---
+
+## Test coverage report (JaCoCo)
+
+Run tests and generate the coverage report locally (requires Java 21 + Gradle, or use the Docker build):
+
+```bash
+./gradlew test jacocoTestReport
+```
+
+HTML report available at:
+```
+build/reports/jacoco/test/html/index.html
+```
+
+To verify the 80% threshold:
+```bash
+./gradlew jacocoTestCoverageVerification
+```
+
+---
