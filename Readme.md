@@ -135,12 +135,3 @@ To verify the 80% threshold:
 ```
 
 ---
-
-## Design notes
-
-- **Immutability**: all domain models are Java records with defensive copies for mutable collections.
-- **ID generation**: the `searchId` is a SHA-256 hash of the request payload — no database access needed to generate it.
-- **Ages ordering**: the hash is computed from the raw JSON, so age order is preserved and affects the resulting `searchId`.
-- **Virtual threads**: Kafka listener container uses Java 21 virtual threads (`Executors.newVirtualThreadPerTaskExecutor()`).
-- **Thread safety**: controllers and services are stateless; database writes use `@Transactional`.
-- **SQL injection prevention**: all queries go through JPA with parameterized JPQL — no string concatenation in queries.
