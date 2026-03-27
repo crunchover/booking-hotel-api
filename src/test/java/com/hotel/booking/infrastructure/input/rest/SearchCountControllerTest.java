@@ -3,7 +3,7 @@ package com.hotel.booking.infrastructure.input.rest;
 import com.hotel.booking.domain.model.SearchCountResponse;
 import com.hotel.booking.domain.port.input.GetSearchCountUseCase;
 import com.hotel.booking.infrastructure.input.rest.advice.GlobalExceptionHandler;
-import com.hotel.booking.shared.exception.ResourceNotFoundException;
+import com.hotel.booking.application.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;

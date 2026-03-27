@@ -3,7 +3,7 @@ package com.hotel.booking.application.service;
 import com.hotel.booking.domain.model.HotelSearchData;
 import com.hotel.booking.domain.model.SearchCountResponse;
 import com.hotel.booking.domain.port.output.SearchPersistencePort;
-import com.hotel.booking.shared.exception.ResourceNotFoundException;
+import com.hotel.booking.application.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

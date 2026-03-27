@@ -4,7 +4,7 @@ import com.hotel.booking.domain.model.HotelSearchData;
 import com.hotel.booking.domain.model.SearchCountResponse;
 import com.hotel.booking.domain.port.input.GetSearchCountUseCase;
 import com.hotel.booking.domain.port.output.SearchPersistencePort;
-import com.hotel.booking.shared.exception.ResourceNotFoundException;
+import com.hotel.booking.application.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

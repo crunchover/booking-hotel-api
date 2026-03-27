@@ -3,7 +3,7 @@ package com.hotel.booking.infrastructure.output.kafka;
 import com.hotel.booking.application.service.HashService;
 import com.hotel.booking.domain.model.SearchEvent;
 import com.hotel.booking.domain.model.SearchRequest;
-import com.hotel.booking.shared.exception.GatewayErrorException;
+import com.hotel.booking.application.exception.GatewayErrorException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.kafka.core.KafkaTemplate;

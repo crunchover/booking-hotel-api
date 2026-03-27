@@ -3,6 +3,7 @@ package com.hotel.booking.infrastructure.input.rest;
 import com.hotel.booking.domain.model.CreateSearchResponse;
 import com.hotel.booking.domain.model.SearchRequest;
 import com.hotel.booking.domain.port.input.CreateSearchUseCase;
+import com.hotel.booking.infrastructure.input.rest.dto.SearchRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,7 +24,8 @@ public class CreateSearchController {
 
     @PostMapping("/search")
     @Operation(summary = "Register a hotel search")
-    public ResponseEntity<CreateSearchResponse> createSearch(@Valid @RequestBody SearchRequest request) {
+    public ResponseEntity<CreateSearchResponse> createSearch(@Valid @RequestBody SearchRequestDto dto) {
+        SearchRequest request = new SearchRequest(dto.hotelId(), dto.checkIn(), dto.checkOut(), dto.ages());
         String searchId = createSearchUseCase.apply(request);
         return ResponseEntity
                 .created(URI.create("/search/" + searchId))

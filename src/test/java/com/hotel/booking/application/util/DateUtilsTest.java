@@ -1,4 +1,4 @@
-package com.hotel.booking.shared.util;
+package com.hotel.booking.application.util;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package com.hotel.booking.shared.validation;
+package com.hotel.booking.infrastructure.input.rest.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
