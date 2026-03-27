@@ -3,8 +3,8 @@ package com.hotel.booking.application.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotel.booking.domain.model.SearchRequest;
-import com.hotel.booking.shared.exception.GatewayErrorException;
-import com.hotel.booking.shared.util.DateUtils;
+import com.hotel.booking.application.exception.GatewayErrorException;
+import com.hotel.booking.application.util.DateUtils;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,8 +1,8 @@
 package com.hotel.booking.infrastructure.input.rest.advice;
 
-import com.hotel.booking.shared.exception.BadRequestException;
-import com.hotel.booking.shared.exception.GatewayErrorException;
-import com.hotel.booking.shared.exception.ResourceNotFoundException;
+import com.hotel.booking.application.exception.BadRequestException;
+import com.hotel.booking.application.exception.GatewayErrorException;
+import com.hotel.booking.application.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

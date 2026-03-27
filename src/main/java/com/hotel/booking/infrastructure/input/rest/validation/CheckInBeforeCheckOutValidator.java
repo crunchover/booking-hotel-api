@@ -1,6 +1,6 @@
-package com.hotel.booking.shared.validation;
+package com.hotel.booking.infrastructure.input.rest.validation;
 
-import com.hotel.booking.domain.model.SearchRequest;
+import com.hotel.booking.infrastructure.input.rest.dto.SearchRequestDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -8,12 +8,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class CheckInBeforeCheckOutValidator implements ConstraintValidator<CheckInBeforeCheckOut, SearchRequest> {
+public class CheckInBeforeCheckOutValidator implements ConstraintValidator<CheckInBeforeCheckOut, SearchRequestDto> {
 
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Override
-    public boolean isValid(SearchRequest request, ConstraintValidatorContext context) {
+    public boolean isValid(SearchRequestDto request, ConstraintValidatorContext context) {
         if (request == null) return true;
         if (request.checkIn() == null || request.checkOut() == null) return true;
 
